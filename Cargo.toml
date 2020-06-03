@@ -1,0 +1,14 @@
+[package]
+name = "board-em-api"
+version = "0.1.0"
+authors = ["Christian Lowe <christianlowe.cl@gmail.com>"]
+edition = "2018"
+license = "BSD-3-Clause"
+description = "Web client for Board Em https://github.com/MatthewMerrill/board-em"
+repository = "https://github.com/ChristianLowe/board-em-api/"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+reqwest = { version = "0.10", features = ["blocking", "json"] }
+serde = { version = "1.0.111", features = ["derive"] }
