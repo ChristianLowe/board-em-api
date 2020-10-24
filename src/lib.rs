@@ -17,21 +17,21 @@ pub struct WebClient {
 }
 
 impl WebClient {
-    pub fn from_hostname(hostname: String) -> WebClient {
+    pub fn from_hostname(hostname: &str) -> WebClient {
         WebClient {
             client: Client::new(),
-            hostname,
+            hostname: hostname.to_string(),
         }
     }
 
-    pub fn get_latest_web_game(&self, game_id: &String) -> Result<WebGame, Box<dyn std::error::Error>> {
-        let request_url = format!("https://{}/api/games/{}", self.hostname, *game_id);
+    pub fn get_latest_web_game(&self, game_id: &str) -> Result<WebGame, Box<dyn std::error::Error>> {
+        let request_url = format!("https://{}/api/games/{}", self.hostname, game_id);
         let response = reqwest::blocking::get(&request_url)?;
         let web_game: WebGame = response.json()?;
         Result::Ok(web_game)
     }
 
-    pub fn submit_move(&self, web_game: &WebGame, next_move: &String) -> Result<Response, Error> {
+    pub fn submit_move(&self, web_game: &WebGame, next_move: &str) -> Result<Response, Error> {
         let move_number = web_game.moves.len();
         let request_url = format!("https://{}/api/games/{}/moves/{}", self.hostname, web_game.id, move_number);
         self.client.post(request_url.as_str()).json(next_move).send()
